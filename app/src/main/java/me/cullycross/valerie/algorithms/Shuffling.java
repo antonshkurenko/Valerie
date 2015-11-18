@@ -13,12 +13,22 @@ import java.util.List;
 // todo(tonyshkurenko), 11/19/15: investigate about speed and memory of every algorithm
 public interface Shuffling<T> {
 
-    /**
-     * shuffle!
-     *
-     * @param list of objects to shuffle
-     * @return result shuffled list
-     */
+  /**
+   * shuffle!
+   *
+   * @param list of objects to shuffle
+   * @return result shuffled list
+   */
 
-    List<T> shuffle(List<T> list);
+  List<T> shuffle(List<T> list, ShuffleCallback callback);
+
+  interface ShuffleCallback {
+    /**
+     * Called when shuffling two elements
+     *
+     * @param addedTo index (maybe to another array)
+     * @param randomIndex index (from source array)
+     */
+    void onShuffle(int addedTo, int randomIndex);
+  }
 }

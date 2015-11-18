@@ -29,14 +29,14 @@ public class StartActivity extends AppCompatActivity {
 
     long currentTime = System.nanoTime();
 
-    Log.d(TAG, algorithm.shuffle(mTest).toString());
+    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
     long elapsed = System.nanoTime() - currentTime;
     Log.d(TAG, "Elapsed time: " + elapsed);
 
     algorithm = new MediumShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest).toString());
+    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
     elapsed = System.nanoTime() - currentTime;
     Log.d(TAG, "Elapsed time: " + elapsed);
 
@@ -44,7 +44,7 @@ public class StartActivity extends AppCompatActivity {
     algorithm = new FastShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest).toString());
+    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
     elapsed = System.nanoTime() - currentTime;
     Log.d(TAG, "Elapsed time: " + elapsed);
 
@@ -52,7 +52,7 @@ public class StartActivity extends AppCompatActivity {
     algorithm = new CollectionsApiShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest).toString());
+    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
     elapsed = System.nanoTime() - currentTime;
     Log.d(TAG, "Elapsed time: " + elapsed);
   }

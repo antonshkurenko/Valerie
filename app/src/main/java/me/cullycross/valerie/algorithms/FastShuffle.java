@@ -20,7 +20,7 @@ public class FastShuffle<T> implements Shuffling<T> {
     mRandom = new Random();
   }
 
-  @Override public List<T> shuffle(List<T> list) {
+  @Override public List<T> shuffle(List<T> list, ShuffleCallback callback) {
 
     final List<T> sourceCopy = new ArrayList<>(list);
 
@@ -29,6 +29,9 @@ public class FastShuffle<T> implements Shuffling<T> {
     while (n > 0) {
       i = (int) Math.round(Math.floor(mRandom.nextDouble() * n--));
       Collections.swap(sourceCopy, n, i);
+      if (callback != null) {
+        callback.onShuffle(n, i);
+      }
     }
 
     return sourceCopy;

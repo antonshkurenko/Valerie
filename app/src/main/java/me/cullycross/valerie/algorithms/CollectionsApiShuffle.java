@@ -20,7 +20,9 @@ public class CollectionsApiShuffle<T> implements Shuffling<T> {
     mRandom = new Random();
   }
 
-  @Override public List<T> shuffle(List<T> list) {
+  @Override public List<T> shuffle(List<T> list, ShuffleCallback callback) {
+
+    // callback ignored, because I can't add callback to system api
 
     final List<T> sourceCopy = new ArrayList<>(list);
 

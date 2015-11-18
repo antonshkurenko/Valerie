@@ -21,7 +21,7 @@ public class SlowShuffle<T> implements Shuffling<T> {
     mRandom = new Random();
   }
 
-  @Override public List<T> shuffle(List<T> list) {
+  @Override public List<T> shuffle(List<T> list, ShuffleCallback callback) {
 
     final List<T> sourceCopy = new ArrayList<>(list);
 
@@ -37,6 +37,10 @@ public class SlowShuffle<T> implements Shuffling<T> {
         copy.add(object);
         sourceCopy.set(i, null);
         n--;
+
+        if (callback != null) {
+          callback.onShuffle(copy.size() - 1, i);
+        }
       }
     }
 
