@@ -1,10 +1,11 @@
-package me.cullycross.valerie;
+package me.cullycross.valerie.activities;
 
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import java.util.ArrayList;
 import java.util.List;
+import me.cullycross.valerie.R;
 import me.cullycross.valerie.algorithms.CollectionsApiShuffle;
 import me.cullycross.valerie.algorithms.FastShuffle;
 import me.cullycross.valerie.algorithms.MediumShuffle;
