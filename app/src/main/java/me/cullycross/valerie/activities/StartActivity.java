@@ -1,8 +1,13 @@
 package me.cullycross.valerie.activities;
 
+import android.app.ActivityManager;
+import android.content.Context;
+import android.content.pm.ConfigurationInfo;
+import android.opengl.GLSurfaceView;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
-import android.util.Log;
+import android.widget.Toast;
+import butterknife.ButterKnife;
 import java.util.ArrayList;
 import java.util.List;
 import me.cullycross.valerie.R;
@@ -11,50 +16,54 @@ import me.cullycross.valerie.algorithms.FastShuffle;
 import me.cullycross.valerie.algorithms.MediumShuffle;
 import me.cullycross.valerie.algorithms.Shuffling;
 import me.cullycross.valerie.algorithms.SlowShuffle;
+import timber.log.Timber;
 
 public class StartActivity extends AppCompatActivity {
-
-  private static final String TAG = StartActivity.class.getSimpleName();
-
-  final List<Integer> mTest = new ArrayList<>();
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     super.onCreate(savedInstanceState);
     setContentView(R.layout.activity_start);
 
-    for(int i = 100; i -->0 ;) {
-      mTest.add(i);
+    ButterKnife.bind(this);
+
+    testShuffle();
+  }
+
+  private void testShuffle() {
+
+    final List<Integer> test = new ArrayList<>();
+
+    for (int i = 100; i-- > 0; ) {
+      test.add(i);
     }
 
     Shuffling<Integer> algorithm = new SlowShuffle<>();
 
     long currentTime = System.nanoTime();
 
-    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
+    Timber.d(algorithm.shuffle(test, null).toString());
     long elapsed = System.nanoTime() - currentTime;
-    Log.d(TAG, "Elapsed time: " + elapsed);
+    Timber.d("Elapsed time: " + elapsed);
 
     algorithm = new MediumShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
+    Timber.d(algorithm.shuffle(test, null).toString());
     elapsed = System.nanoTime() - currentTime;
-    Log.d(TAG, "Elapsed time: " + elapsed);
-
+    Timber.d("Elapsed time: " + elapsed);
 
     algorithm = new FastShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
+    Timber.d(algorithm.shuffle(test, null).toString());
     elapsed = System.nanoTime() - currentTime;
-    Log.d(TAG, "Elapsed time: " + elapsed);
-
+    Timber.d("Elapsed time: " + elapsed);
 
     algorithm = new CollectionsApiShuffle<>();
 
     currentTime = System.nanoTime();
-    Log.d(TAG, algorithm.shuffle(mTest, null).toString());
+    Timber.d(algorithm.shuffle(test, null).toString());
     elapsed = System.nanoTime() - currentTime;
-    Log.d(TAG, "Elapsed time: " + elapsed);
+    Timber.d("Elapsed time: " + elapsed);
   }
 }
