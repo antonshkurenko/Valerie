@@ -1,4 +1,4 @@
-package me.cullycross.valerie.graphics.utils;
+package graphics.utils
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -7,7 +7,5 @@ package me.cullycross.valerie.graphics.utils;
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-public class Constants {
 
-  public static final int BYTES_PER_FLOAT = 4;
-}
+const val BYTES_PER_FLOAT = 4

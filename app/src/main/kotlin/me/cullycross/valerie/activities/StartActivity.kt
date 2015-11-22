@@ -12,7 +12,7 @@ import java.util.*
 
 class StartActivity : AppCompatActivity() {
 
-    val textView : TextView by bindView(R.id.hello_world)
+    val textView: TextView by bindView(R.id.hello_world)
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -22,7 +22,40 @@ class StartActivity : AppCompatActivity() {
 
         Timber.d(textView.text.toString())
 
+        anotherTestShuffle()
+
         testShuffle()
+    }
+
+    private fun anotherTestShuffle() {
+        val algoList = ArrayList<Shuffling<Int>>()
+
+        algoList.add(Shuffling { list, callback ->
+            Timber.d("TestYeah!")
+            callback.onShuffle(1, 1)
+            emptyList()
+        })
+
+        algoList.add(Shuffling { list, callback ->
+            Timber.d("TestYeah!!!!")
+            val l = ArrayList<Int>()
+            l.add(1)
+            Timber.d(l.toString())
+            callback.onShuffle(1, 1)
+            l
+        })
+
+        algoList.add(Shuffling { list, callback ->
+            Timber.d("TestYeahArray!!!!")
+            callback.onShuffle(1, 1)
+            ArrayList<Int>()
+        })
+
+        for (algo in algoList) {
+            algo.shuffle(emptyList(), { first, second ->
+                Timber.d("Huh...:(")
+            })
+        }
     }
 
     private fun testShuffle() {

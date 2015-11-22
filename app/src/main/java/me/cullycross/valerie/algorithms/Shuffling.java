@@ -1,5 +1,6 @@
 package me.cullycross.valerie.algorithms;
 
+import android.support.annotation.Nullable;
 import java.util.List;
 
 /**
@@ -20,7 +21,7 @@ public interface Shuffling<T> {
    * @return result shuffled list
    */
 
-  List<T> shuffle(List<T> list, ShuffleCallback callback);
+  List<T> shuffle(List<T> list, @Nullable ShuffleCallback callback);
 
   interface ShuffleCallback {
     /**
