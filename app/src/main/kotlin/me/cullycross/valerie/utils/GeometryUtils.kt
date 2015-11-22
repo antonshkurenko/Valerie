@@ -12,6 +12,10 @@ import java.util.*
 
 class Point(val x: Float, val y: Float) {
 
+    fun translateX(distance: Float): Point {
+        return Point(x + distance, y)
+    }
+
     fun translateY(distance: Float): Point {
         return Point(x, y + distance)
     }
@@ -36,7 +40,7 @@ class Circle(val center: Point, val radius: Float) {
     }
 }
 
-class Vector (val x: Float, val y: Float){
+class Vector(val x: Float, val y: Float) {
 
     constructor(from: Point, to: Point) : this(to.x - from.x, to.y - from.y)
 
@@ -73,5 +77,19 @@ class Vector (val x: Float, val y: Float){
 
     fun angle(): Float {
         return Math.atan2(y.toDouble(), x.toDouble()).toFloat()
+    }
+
+    /**
+     * CCW winding
+     */
+    fun perpendicularCCW(): Vector {
+        return Vector(-y, x)
+    }
+
+    /**
+     * CW winding
+     */
+    fun perpendicularCW(): Vector {
+        return Vector(y, -x)
     }
 }

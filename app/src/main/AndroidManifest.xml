@@ -3,14 +3,13 @@
     package="me.cullycross.valerie">
 
   <application
+      android:name=".Valerie"
       android:allowBackup="true"
-      android:name="Valerie"
       android:icon="@mipmap/ic_launcher"
       android:label="@string/app_name"
       android:supportsRtl="true"
       android:theme="@style/AppTheme">
     <activity android:name="activities.StartActivity">
-
       <intent-filter>
         <action android:name="android.intent.action.MAIN"/>
 
@@ -18,7 +17,6 @@
       </intent-filter>
     </activity>
     <activity android:name="activities.ShuffleActivity">
-
     </activity>
   </application>
 

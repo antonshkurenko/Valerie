@@ -1,4 +1,4 @@
-package me.cullycross.valerie.objects;
+package me.cullycross.valerie.graphics.objects
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -8,9 +8,7 @@ package me.cullycross.valerie.objects;
  * Follow me: @tonyshkurenko
  */
 
-/**
- * Since java interfaces I like much more, than Kotlin's
- */
-public interface Drawable {
-  void draw();
+interface Movable {
+    fun move()
+    fun stop()
 }

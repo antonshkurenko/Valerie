@@ -1,11 +1,11 @@
 package graphics.objects
 
 
-import android.opengl.GLES20.GL_TRIANGLE_FAN
-import android.opengl.GLES20.glDrawArrays
-import objects.Drawable
+import android.opengl.GLES20.*
+import me.cullycross.valerie.objects.Drawable
 import utils.Circle
 import utils.Point
+import utils.Vector
 import java.util.*
 
 /**
@@ -17,21 +17,25 @@ import java.util.*
  */
 class ViewObjectBuilder private constructor(sizeInVertices: Int) {
 
-    private val mVertexData: FloatArray
-    private val drawList = ArrayList<() -> Unit>()
-    private var mOffset = 0
+    private val vertexData: FloatArray
+    private val drawList = ArrayList<Drawable>()
+    private var offset = 0
 
     init {
-        mVertexData = FloatArray(sizeInVertices * FLOATS_PER_VERTEX)
+        vertexData = FloatArray(sizeInVertices * FLOATS_PER_VERTEX)
     }
 
-    private fun appendCircle(circle: Circle, numPoints: Int, aspectRatio: Float): ViewObjectBuilder {
+    /**
+     * appends circle to the figure
+     */
+    private fun appendCircle(circle: Circle, numPoints: Int, aspectRatio: Float):
+            ViewObjectBuilder {
 
-        val startVertex = mOffset / FLOATS_PER_VERTEX
+        val startVertex = offset / FLOATS_PER_VERTEX
         val numVertices = sizeOfCircleInVertices(numPoints)
 
-        mVertexData[mOffset++] = circle.center.x / aspectRatio
-        mVertexData[mOffset++] = circle.center.y
+        vertexData[offset++] = circle.center.x / aspectRatio
+        vertexData[offset++] = circle.center.y
 
         for (i in 0..numPoints) {
             val angleInRadians = (i.toFloat() / numPoints.toFloat()) * (Math.PI.toFloat() * 2f)
@@ -39,27 +43,71 @@ class ViewObjectBuilder private constructor(sizeInVertices: Int) {
             val c = Math.cos(angleInRadians.toDouble()).toFloat()
             val s = Math.sin(angleInRadians.toDouble()).toFloat()
 
-            mVertexData[mOffset++] = circle.center.x + circle.radius * c / aspectRatio
+            vertexData[offset++] = circle.center.x + circle.radius * c / aspectRatio
 
-            mVertexData[mOffset++] = circle.center.y + circle.radius * s
+            vertexData[offset++] = circle.center.y + circle.radius * s
 
         }
 
-        drawList.add { glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices) }
+        drawList.add(Drawable { glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices) })
+        return this
+    }
+
+    private fun appendLine(from: Point, startWidth: Float, to: Point, endWidth: Float):
+            ViewObjectBuilder {
+        val vector = Vector(from, to)
+        val perpendicular = vector.perpendicularCCW()
+
+        val a = from.translate(perpendicular.scale(startWidth/2f))
+        val b = from.translate(perpendicular.scale(-startWidth/2f))
+        val c = to.translate(perpendicular.scale(endWidth/2f))
+        val d = to.translate(perpendicular.scale(-endWidth/2f))
+
+        val startVertex = offset / FLOATS_PER_VERTEX
+
+        /**
+         *
+         *        A
+         *       / \
+         *      /      \
+         *     . p1        \
+         *    /                \D
+         *   /                  .p2
+         *  B --------------- C
+         *
+         */
+        // Triangle strip ABDC
+        // A
+        vertexData[offset++] = a.x
+        vertexData[offset++] = a.y
+        // B
+        vertexData[offset++] = b.x
+        vertexData[offset++] = b.y
+        // D
+        vertexData[offset++] = d.x
+        vertexData[offset++] = d.y
+        // C
+        vertexData[offset++] = c.y
+        vertexData[offset++] = c.y
+
+        drawList.add(Drawable { glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 8) })
         return this
     }
 
     private fun build(): GeneratedData {
-        return GeneratedData(mVertexData, drawList)
+        return GeneratedData(vertexData, drawList)
     }
 
-    data class GeneratedData(val mVertexData: FloatArray, val mDrawableList: List<() -> Unit>)
+    data class GeneratedData(val vertexData: FloatArray, val drawableList: List<Drawable>)
 
     companion object {
 
         private val FLOATS_PER_VERTEX = 2 // X, Y
 
-        internal fun createCircle(center: Point, radius: Float, numPoints: Int,
+        /**
+         * move to another file
+         */
+        fun createCircle(center: Point, radius: Float, numPoints: Int,
                                   aspectRatio: Float): GeneratedData {
 
             val size = sizeOfCircleInVertices(numPoints)

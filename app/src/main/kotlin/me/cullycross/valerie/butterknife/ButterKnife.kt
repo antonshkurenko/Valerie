@@ -8,14 +8,6 @@ import android.view.View
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 import android.support.v4.app.Fragment as SupportFragment
-/**
- * Created by: Anton Shkurenko (cullycross)
- * Project: Valerie
- * Date: 11/22/15
- * Code style: SquareAndroid (https://github.com/square/java-code-styles)
- * Follow me: @tonyshkurenko
- */
-
 
 public fun <V : View> View.bindView(id: Int)
         : ReadOnlyProperty<View, V> = required(id, viewFinder)

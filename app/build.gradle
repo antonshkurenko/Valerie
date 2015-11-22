@@ -1,6 +1,7 @@
 buildscript {
   repositories {
-    mavenCentral()
+    //mavenCentral()
+    jcenter()
     maven {
       url 'http://oss.sonatype.org/content/repositories/snapshots'
     }
@@ -9,6 +10,7 @@ buildscript {
   dependencies {
     classpath 'me.tatarka:gradle-retrolambda:3.2.3'
     classpath 'org.jetbrains.kotlin:kotlin-gradle-plugin:1.0.0-beta-2423'
+    classpath 'org.jetbrains.kotlin:kotlin-android-extensions:1.0.0-beta-2423'
   }
 }
 
@@ -45,6 +47,7 @@ android {
 dependencies {
 
   compile 'org.jetbrains.kotlin:kotlin-stdlib:1.0.0-beta-2423' // kotlin std lib
+  compile 'org.jetbrains.anko:anko-sdk15:0.7.3'
 
   compile 'com.android.support:appcompat-v7:23.1.1'
   compile 'com.android.support:recyclerview-v7:23.1.1'

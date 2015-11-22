@@ -37,7 +37,6 @@ public class SlowShuffle<T> implements Shuffling<T> {
         copy.add(object);
         sourceCopy.set(i, null);
         n--;
-
         if (callback != null) {
           callback.onShuffle(copy.size() - 1, i);
         }
