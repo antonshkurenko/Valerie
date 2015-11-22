@@ -15,7 +15,10 @@ import java.util.*
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-class ViewObjectBuilder private constructor(sizeInVertices: Int) {
+
+const val FLOATS_PER_VERTEX = 2 // X, Y
+
+class ViewObjectBuilder public constructor(sizeInVertices: Int) {
 
     private val vertexData: FloatArray
     private val drawList = ArrayList<Drawable>()
@@ -58,10 +61,10 @@ class ViewObjectBuilder private constructor(sizeInVertices: Int) {
         val vector = Vector(from, to)
         val perpendicular = vector.perpendicularCCW()
 
-        val a = from.translate(perpendicular.scale(startWidth/2f))
-        val b = from.translate(perpendicular.scale(-startWidth/2f))
-        val c = to.translate(perpendicular.scale(endWidth/2f))
-        val d = to.translate(perpendicular.scale(-endWidth/2f))
+        val a = from.translate(perpendicular.scale(startWidth / 2f))
+        val b = from.translate(perpendicular.scale(-startWidth / 2f))
+        val c = to.translate(perpendicular.scale(endWidth / 2f))
+        val d = to.translate(perpendicular.scale(-endWidth / 2f))
 
         val startVertex = offset / FLOATS_PER_VERTEX
 
@@ -102,13 +105,8 @@ class ViewObjectBuilder private constructor(sizeInVertices: Int) {
 
     companion object {
 
-        private val FLOATS_PER_VERTEX = 2 // X, Y
-
-        /**
-         * move to another file
-         */
         fun createCircle(center: Point, radius: Float, numPoints: Int,
-                                  aspectRatio: Float): GeneratedData {
+                         aspectRatio: Float): GeneratedData {
 
             val size = sizeOfCircleInVertices(numPoints)
 
@@ -117,7 +115,18 @@ class ViewObjectBuilder private constructor(sizeInVertices: Int) {
             return ViewObjectBuilder(size).appendCircle(circle, numPoints, aspectRatio).build()
         }
 
-        private fun sizeOfCircleInVertices(numPoints: Int): Int {
+        fun createLine(from: Point, length: Float, angle: Float) {
+
+
+
+            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth)
+        }
+
+        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float) {
+            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth)
+        }
+
+        fun sizeOfCircleInVertices(numPoints: Int): Int {
             return 1 + (numPoints + 1)
         }
     }

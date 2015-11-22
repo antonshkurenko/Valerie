@@ -1,4 +1,4 @@
-package me.cullycross.valerie.graphics.objects
+package me.cullycross.valerie.objects
 
 import utils.Point
 import utils.Vector
@@ -16,6 +16,10 @@ class Line(var  from: Point,
            var  to: Point,
            val  endWidth: Float, speed: Vector) : AbstractMovableObject(from, speed) {
 
+    companion object {
+        fun createLine(): Line {
 
+        }
+    }
 
 }

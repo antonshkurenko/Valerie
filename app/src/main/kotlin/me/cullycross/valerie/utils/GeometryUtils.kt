@@ -42,6 +42,13 @@ class Circle(val center: Point, val radius: Float) {
 
 class Vector(val x: Float, val y: Float) {
 
+    // todo(tonyshkurenko), 11/22/15:  think about third constructor, not factory method
+    companion object {
+        fun fromLengthAndAngle(length: Float, angle: Float): Vector {
+            return Vector(length * Math.sin(angle), length * Math.cos(angle))
+        }
+    }
+
     constructor(from: Point, to: Point) : this(to.x - from.x, to.y - from.y)
 
     fun length(): Float {
