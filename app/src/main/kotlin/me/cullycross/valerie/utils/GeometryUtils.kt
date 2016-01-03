@@ -1,4 +1,4 @@
-package utils
+package me.cullycross.valerie.utils
 
 import java.util.*
 
@@ -18,6 +18,10 @@ class Point(val x: Float, val y: Float) {
 
     fun translateY(distance: Float): Point {
         return Point(x, y + distance)
+    }
+
+    fun translate(distanceX: Float, distanceY: Float): Point {
+        return Point(x + distanceX, y + distanceY)
     }
 
     fun translate(vector: Vector): Point {
@@ -40,16 +44,15 @@ class Circle(val center: Point, val radius: Float) {
     }
 }
 
+@Suppress("CAST_NEVER_SUCCEEDS") // todo(tonyshkurenko), 1/2/16:  why?
 class Vector(val x: Float, val y: Float) {
 
-    // todo(tonyshkurenko), 11/22/15:  think about third constructor, not factory method
-    companion object {
-        fun fromLengthAndAngle(length: Float, angle: Float): Vector {
-            return Vector(length * Math.sin(angle), length * Math.cos(angle))
-        }
-    }
-
     constructor(from: Point, to: Point) : this(to.x - from.x, to.y - from.y)
+
+    // todo(tonyshkurenko), 1/3/16:  do smth with this constructor
+    constructor(length: Float, angle: Int) :
+            this(length * Math.sin(angle * Math.PI).toFloat(),
+                    length * Math.cos(angle * Math.PI).toFloat())
 
     fun length(): Float {
         return Math.sqrt(x * x + y * y.toDouble()).toFloat()
@@ -72,7 +75,6 @@ class Vector(val x: Float, val y: Float) {
     }
 
     fun rotateRandom(r: Random): Vector {
-
         val angle = r.nextFloat() * 2f * Math.PI.toFloat()
         return rotate(angle)
     }

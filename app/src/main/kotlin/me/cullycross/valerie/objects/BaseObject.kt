@@ -1,6 +1,6 @@
 package me.cullycross.valerie.objects
 
-import me.cullycross.valerie.objects.Drawable
+import me.cullycross.valerie.utils.Point
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -10,7 +10,7 @@ import me.cullycross.valerie.objects.Drawable
  * Follow me: @tonyshkurenko
  */
 
-abstract class BaseObject : Drawable {
+abstract class BaseObject(var position: Point) : Drawable {
 
     var image: Drawable? = null
 

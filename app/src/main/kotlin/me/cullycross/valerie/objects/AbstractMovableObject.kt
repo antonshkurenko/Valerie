@@ -1,8 +1,7 @@
 package me.cullycross.valerie.objects
 
-import utils.Point
-import utils.Vector
-import java.text.FieldPosition
+import me.cullycross.valerie.utils.Point
+import me.cullycross.valerie.utils.Vector
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -12,7 +11,7 @@ import java.text.FieldPosition
  * Follow me: @tonyshkurenko
  */
 
-abstract class AbstractMovableObject(var position: Point, var speed: Vector): BaseObject(), Movable {
+abstract class AbstractMovableObject(position: Point, var speed: Vector) : BaseObject(position), Movable {
 
     override fun move() {
         position = position.translate(speed)

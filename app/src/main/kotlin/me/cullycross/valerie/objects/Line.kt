@@ -1,7 +1,7 @@
 package me.cullycross.valerie.objects
 
-import utils.Point
-import utils.Vector
+import me.cullycross.valerie.utils.Point
+import me.cullycross.valerie.utils.Vector
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -17,9 +17,10 @@ class Line(var  from: Point,
            val  endWidth: Float, speed: Vector) : AbstractMovableObject(from, speed) {
 
     companion object {
-        fun createLine(): Line {
+        // todo(tonyshkurenko), 1/3/16:  make this
+        /*fun createLine(): Line {
 
-        }
+        }*/
     }
 
 }

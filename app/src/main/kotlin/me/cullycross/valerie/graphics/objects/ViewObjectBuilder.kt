@@ -3,10 +3,10 @@ package graphics.objects
 
 import android.opengl.GLES20.*
 import me.cullycross.valerie.objects.Drawable
-import utils.Circle
-import utils.Point
-import utils.Vector
-import java.util.*
+import me.cullycross.valerie.utils.Circle
+import me.cullycross.valerie.utils.Point
+import me.cullycross.valerie.utils.Vector
+import java.util.ArrayList
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -115,15 +115,14 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             return ViewObjectBuilder(size).appendCircle(circle, numPoints, aspectRatio).build()
         }
 
-        fun createLine(from: Point, length: Float, angle: Float) {
+        fun createLine(from: Point, length: Float, angle: Float, width: Float): GeneratedData {
 
-
-
-            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth)
+            return ViewObjectBuilder(8).appendLine(
+                    from, width, from.translate(Vector(length, angle)), width).build()
         }
 
-        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float) {
-            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth)
+        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float): GeneratedData {
+            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth).build()
         }
 
         fun sizeOfCircleInVertices(numPoints: Int): Int {
