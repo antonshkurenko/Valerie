@@ -1,4 +1,4 @@
-package graphics.renderers
+package me.cullycross.valerie.graphics.renderers
 
 import android.content.Context
 import android.opengl.GLES20.*

@@ -1,6 +1,6 @@
 package me.cullycross.valerie.utils
 
-import java.util.*
+import java.util.Random
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -49,10 +49,12 @@ class Vector(val x: Float, val y: Float) {
 
     constructor(from: Point, to: Point) : this(to.x - from.x, to.y - from.y)
 
-    // todo(tonyshkurenko), 1/3/16:  do smth with this constructor
-    constructor(length: Float, angle: Int) :
-            this(length * Math.sin(angle * Math.PI).toFloat(),
-                    length * Math.cos(angle * Math.PI).toFloat())
+    companion object {
+        fun fromLengthAndAngle(length: Float, angle: Float): Vector {
+            return Vector(length * Math.sin(angle.toDouble()).toFloat(),
+                    length * Math.cos(angle.toDouble()).toFloat())
+        }
+    }
 
     fun length(): Float {
         return Math.sqrt(x * x + y * y.toDouble()).toFloat()

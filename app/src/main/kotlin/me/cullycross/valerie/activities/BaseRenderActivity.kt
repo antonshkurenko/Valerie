@@ -34,7 +34,7 @@ abstract class BaseRenderActivity : AppCompatActivity() {
 
      * @return configured renderer
      */
-    abstract fun createRenderer(): GLSurfaceView.Renderer? // todo(tonyshkurenko), 11/22/15:  later set this to not null
+    abstract val renderer: GLSurfaceView.Renderer// todo(tonyshkurenko), 11/22/15:  later set this to not null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,7 +73,7 @@ abstract class BaseRenderActivity : AppCompatActivity() {
         if (supportEs2) {
             //Request an Open ES 2.0 compatible context.
             surfaceView.setEGLContextClientVersion(2)
-            //surfaceView.setRenderer(createRenderer())
+            surfaceView.setRenderer(renderer)
             surfaceView.renderMode = GLSurfaceView.RENDERMODE_WHEN_DIRTY
 
             renderSet = true

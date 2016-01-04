@@ -39,6 +39,6 @@ open class MoveAction(protected val obj: BaseObject,
         val percent = ((currentTime - startTime).toFloat() / time).clamp(0f, 1f)
 
         obj.position = startPosition.translate(
-                Vector((distance * percent).toFloat(), (angle * Math.PI).toInt()))
+                Vector.fromLengthAndAngle((distance * percent).toFloat(), angle))
     }
 }

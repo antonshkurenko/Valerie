@@ -116,7 +116,6 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         }
 
         fun createLine(from: Point, length: Float, angle: Float, width: Float): GeneratedData {
-
             return ViewObjectBuilder(8).appendLine(
                     from, width, from.translate(Vector(length, angle)), width).build()
         }

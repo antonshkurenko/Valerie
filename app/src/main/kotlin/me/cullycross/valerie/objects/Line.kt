@@ -11,16 +11,29 @@ import me.cullycross.valerie.utils.Vector
  * Follow me: @tonyshkurenko
  */
 
-class Line(var  from: Point,
-           val  startWidth: Float,
-           var  to: Point,
-           val  endWidth: Float, speed: Vector) : AbstractMovableObject(from, speed) {
+// todo(tonyshkurenko), 1/4/16:  check how to declare only public getter in main constructor
+// todo(tonyshkurenko), 1/4/16:  what is internal constructor?
+class Line(from: Point, private var end: Point) : BaseObject(from) {
 
-    companion object {
-        // todo(tonyshkurenko), 1/3/16:  make this
-        /*fun createLine(): Line {
+    val length: Float
+    val angle: Float
 
-        }*/
+    // todo(tonyshkurenko), 1/4/16:  check how to call this() not in header
+    constructor(from: Point, length: Float, angle: Float) :
+        this(from, from.translate(Vector.fromLengthAndAngle(length, angle)))
+
+    init {
+        val vector = Vector(from, end)
+        length = vector.length()
+        angle = vector.angle()
     }
 
+    override fun translate(to: Point) {
+        position = to
+        end = position.translate(Vector.fromLengthAndAngle(length, angle))
+    }
+
+    fun getEnd(): Point {
+        return end
+    }
 }

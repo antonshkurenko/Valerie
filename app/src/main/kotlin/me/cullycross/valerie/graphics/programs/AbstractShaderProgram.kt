@@ -13,7 +13,7 @@ import utils.readTextFileFromResource
  * Follow me: @tonyshkurenko
  */
 abstract class AbstractShaderProgram
-protected constructor(context: Context, vertexShaderResourceId: Int,
+    protected constructor(context: Context, vertexShaderResourceId: Int,
                       fragmentShaderResourceId: Int) {
 
     //Shader
