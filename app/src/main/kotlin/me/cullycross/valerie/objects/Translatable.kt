@@ -10,5 +10,7 @@ import me.cullycross.valerie.utils.Point
  * Follow me: @tonyshkurenko
  */
 interface Translatable {
+    // todo(tonyshkurenko), 1/7/16: i want to make its setter private, to set it via translate?
+    var position: Point // thanks God, I'm able to declare abstract values!
     fun translate(to: Point)
 }

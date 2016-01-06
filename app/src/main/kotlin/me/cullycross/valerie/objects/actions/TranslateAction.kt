@@ -1,6 +1,7 @@
 package me.cullycross.valerie.objects.actions
 
 import me.cullycross.valerie.objects.BaseObject
+import me.cullycross.valerie.objects.Translatable
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
 import me.cullycross.valerie.utils.clamp
@@ -13,10 +14,10 @@ import me.cullycross.valerie.utils.clamp
  * Follow me: @tonyshkurenko
  */
 // todo(tonyshkurenko), 1/3/16:  should it be open?
-open class MoveAction(protected val obj: BaseObject,
-                      protected val to: Point,
-                      time: Long,
-                      callback: Action.Callback?) : BaseAction(time, callback) {
+open class TranslateAction(protected val obj: Translatable,
+                           protected val to: Point,
+                           time: Long,
+                           callback: Action.Callback?) : BaseAction(time, callback) {
 
     constructor(obj: BaseObject, to: Point, time: Long) : this(obj, to, time, null)
 
@@ -38,7 +39,7 @@ open class MoveAction(protected val obj: BaseObject,
 
         val percent = ((currentTime - startTime).toFloat() / time).clamp(0f, 1f)
 
-        obj.position = startPosition.translate(
-                Vector.fromLengthAndAngle((distance * percent).toFloat(), angle))
+        obj.translate(startPosition.translate(
+                Vector.fromLengthAndAngle((distance * percent).toFloat(), angle)))
     }
 }

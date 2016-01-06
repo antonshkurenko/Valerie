@@ -11,16 +11,16 @@ import me.cullycross.valerie.utils.Vector
  * Follow me: @tonyshkurenko
  */
 
-// todo(tonyshkurenko), 1/4/16:  check how to declare only public getter in main constructor
-// todo(tonyshkurenko), 1/4/16:  what is internal constructor?
 class Line(from: Point, private var end: Point) : BaseObject(from) {
 
     val length: Float
     val angle: Float
 
-    // todo(tonyshkurenko), 1/4/16:  check how to call this() not in header
-    constructor(from: Point, length: Float, angle: Float) :
+    constructor(from: Point = Point(0f, 0f),
+                length: Float = 1f,
+                angle: Float = Math.PI.toFloat() / 2f) :
         this(from, from.translate(Vector.fromLengthAndAngle(length, angle)))
+
 
     init {
         val vector = Vector(from, end)
@@ -31,6 +31,10 @@ class Line(from: Point, private var end: Point) : BaseObject(from) {
     override fun translate(to: Point) {
         position = to
         end = position.translate(Vector.fromLengthAndAngle(length, angle))
+    }
+
+    override fun toString(): String {
+        return "{Point: ${position.toString()}, length: $length, angle: $angle}"
     }
 
     fun getEnd(): Point {

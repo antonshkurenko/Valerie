@@ -1,7 +1,6 @@
 package me.cullycross.valerie.objects.actions
 
 import android.test.AndroidTestCase
-import android.util.Log
 import me.cullycross.valerie.objects.BaseObject
 import me.cullycross.valerie.utils.Point
 import timber.log.Timber
@@ -13,16 +12,16 @@ import timber.log.Timber
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-class MoveActionTest : AndroidTestCase() {
+class TranslateActionTest : AndroidTestCase() {
 
-    var action: MoveAction? = null
+    var action: TranslateAction? = null
 
     override fun setUp() {
         super.setUp()
 
         Timber.plant(Timber.DebugTree())
 
-        action = object: MoveAction(object : BaseObject(Point(0f, 0f)) {
+        action = object: TranslateAction(object : BaseObject(Point(0f, 0f)) {
             override fun translate(to: Point) {
                 // currently ignored
             }

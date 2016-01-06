@@ -31,6 +31,10 @@ class Point(val x: Float, val y: Float) {
     fun distanceTo(to: Point): Float {
         return Vector(this, to).length()
     }
+
+    override fun toString(): String {
+        return "($x, $y)"
+    }
 }
 
 class Circle(val center: Point, val radius: Float) {
@@ -44,7 +48,6 @@ class Circle(val center: Point, val radius: Float) {
     }
 }
 
-@Suppress("CAST_NEVER_SUCCEEDS") // todo(tonyshkurenko), 1/2/16:  why?
 class Vector(val x: Float, val y: Float) {
 
     constructor(from: Point, to: Point) : this(to.x - from.x, to.y - from.y)
@@ -88,6 +91,10 @@ class Vector(val x: Float, val y: Float) {
 
     fun angle(): Float {
         return Math.atan2(y.toDouble(), x.toDouble()).toFloat()
+    }
+
+    fun point(): Point {
+        return Point(x, y)
     }
 
     /**
