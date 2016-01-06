@@ -10,9 +10,11 @@ import me.cullycross.valerie.utils.Point
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Director<T> {
 
-    override fun direct(position: Point, list: List<T>) {
+open class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Director<T> {
+
+    // todo(tonyshkurenko), 1/7/16:  is this nice way to use lambdas? How to remove Unit type declaration?
+    override fun direct(position: Point, list: List<T>, modify: (T) -> Unit) {
         val count = list.size
 
         var startPoint: Point
@@ -25,6 +27,8 @@ class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Director<T> 
         list.forEach {
             it.translate(startPoint)
             startPoint = startPoint.translateX(distance)
+
+            modify(it)
         }
     }
 }

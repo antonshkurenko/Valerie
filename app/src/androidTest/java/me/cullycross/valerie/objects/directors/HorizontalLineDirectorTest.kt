@@ -1,6 +1,7 @@
 package me.cullycross.valerie.objects.directors
 
 import android.test.AndroidTestCase
+import me.cullycross.valerie.objects.Drawable
 import me.cullycross.valerie.objects.Line
 import me.cullycross.valerie.utils.Point
 import timber.log.Timber
@@ -28,10 +29,14 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
         val list: MutableList<Line> = ArrayList()
 
         for (i in 0..19) {
-            list.add(Line())
+            list.add(Line(image = Drawable {
+                Timber.d("Draw a line: ${toString()}")
+            }))
         }
 
-        director.direct(Point(1f, 2f), list)
+        director.direct(Point(1f, 2f), list) {
+            it.draw()
+        }
 
         Timber.d("Directed list(${list.size}): ${list.toString()}")
 
@@ -42,10 +47,14 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
         list.clear()
 
         for (i in 0..22) {
-            list.add(Line())
+            list.add(Line(image = Drawable {
+                Timber.d("Draw a line: ${toString()}")
+            }))
         }
 
-        director.direct(Point(1f, 2f), list)
+        director.direct(Point(1f, 2f), list) {
+            it.draw()
+        }
 
         Timber.d("Directed list(${list.size}): ${list.toString()}")
 

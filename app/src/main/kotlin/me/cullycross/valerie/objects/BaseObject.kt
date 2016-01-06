@@ -10,9 +10,9 @@ import me.cullycross.valerie.utils.Point
  * Follow me: @tonyshkurenko
  */
 
-abstract class BaseObject(override var position: Point) : Drawable, Translatable {
-
-    var image: Drawable? = null
+abstract class BaseObject(
+        override var position: Point = Point(0f, 0f),
+        var image: Drawable? = null) : Drawable, Translatable {
 
     override fun draw() {
         image?.draw()
