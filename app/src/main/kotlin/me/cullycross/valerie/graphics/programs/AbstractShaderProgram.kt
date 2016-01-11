@@ -3,7 +3,7 @@ package graphics.programs
 import android.content.Context
 import android.opengl.GLES20.glUseProgram
 import graphics.utils.buildProgram
-import utils.readTextFileFromResource
+import me.cullycross.valerie.utils.readTextFileFromResource
 
 /**
  * Created by: Anton Shkurenko (cullycross)

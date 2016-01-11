@@ -1,4 +1,4 @@
-package utils
+package me.cullycross.valerie.utils
 
 import android.content.Context
 import timber.log.Timber
@@ -36,7 +36,7 @@ fun read(ctx: Context, fileName: String): String {
         file = File(ctx.cacheDir, fileName)
 
         input = BufferedReader(InputStreamReader(FileInputStream(file)))
-        var line: String = input.readLine()
+        var line: String? = input.readLine()
         while(line != null) {
             builder.append(line)
             line = input.readLine()

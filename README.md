@@ -10,3 +10,5 @@ Ideas:
 - Another stuff http://gregtatum.com/
 - Visualization of sorting algorithms
 - Watch here http://bl.ocks.org/mbostock
+- Visual algos: http://visualgo.net/
+- Another one link: http://bost.ocks.org/mike/algorithms/

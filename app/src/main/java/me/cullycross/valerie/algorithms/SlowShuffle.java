@@ -1,9 +1,7 @@
 package me.cullycross.valerie.algorithms;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -13,13 +11,7 @@ import java.util.Random;
  * Follow me: @tonyshkurenko
  */
 
-public class SlowShuffle<T> implements Shuffling<T> {
-
-  final Random mRandom;
-
-  public SlowShuffle() {
-    mRandom = new Random();
-  }
+public class SlowShuffle<T> extends AbstractShuffleAlgorithm<T> {
 
   @Override public List<T> shuffle(List<T> list, ShuffleCallback callback) {
 
@@ -33,7 +25,7 @@ public class SlowShuffle<T> implements Shuffling<T> {
 
       i = (int) Math.round(Math.floor(mRandom.nextDouble() * size));
       final T object = sourceCopy.get(i);
-      if(object != null) {
+      if (object != null) {
         copy.add(object);
         sourceCopy.set(i, null);
         n--;

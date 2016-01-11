@@ -22,9 +22,7 @@ class TranslateActionTest : AndroidTestCase() {
         Timber.plant(Timber.DebugTree())
 
         action = object: TranslateAction(object : BaseObject(Point(0f, 0f)) {
-            override fun translate(to: Point) {
-                // currently ignored
-            }
+
         }, Point(25f, 25f), 5000, object : Action.Callback {
             override fun onActionStart() {
                 Timber.d("Action start!")

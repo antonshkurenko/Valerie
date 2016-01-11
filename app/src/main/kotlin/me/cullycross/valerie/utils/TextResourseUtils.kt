@@ -1,4 +1,4 @@
-package utils
+package me.cullycross.valerie.utils
 
 import android.content.Context
 import android.content.res.Resources
@@ -22,7 +22,7 @@ fun readTextFileFromResource(context: Context, resourceId: Int): String {
         val inputStreamReader = InputStreamReader(inputStream)
         val bufferedReader = BufferedReader(inputStreamReader)
 
-        var nextLine: String = bufferedReader.readLine()
+        var nextLine: String? = bufferedReader.readLine()
 
         while (nextLine != null) {
             body.append(nextLine)

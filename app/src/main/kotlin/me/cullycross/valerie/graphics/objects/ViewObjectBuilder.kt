@@ -1,4 +1,4 @@
-package graphics.objects
+package me.cullycross.valerie.graphics.objects
 
 
 import android.opengl.GLES20.*
@@ -6,7 +6,7 @@ import me.cullycross.valerie.objects.Drawable
 import me.cullycross.valerie.utils.Circle
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
-import java.util.ArrayList
+import java.util.*
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -52,7 +52,9 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
 
         }
 
-        drawList.add(Drawable { glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices) })
+        drawList.add(object : Drawable {
+            override fun draw() = glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices)
+        })
         return this
     }
 
@@ -93,7 +95,9 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         vertexData[offset++] = c.y
         vertexData[offset++] = c.y
 
-        drawList.add(Drawable { glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 8) })
+        drawList.add(object : Drawable {
+            override fun draw() = glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 8)
+        })
         return this
     }
 

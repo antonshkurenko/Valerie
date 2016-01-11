@@ -25,9 +25,8 @@ open class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Directo
         }
 
         list.forEach {
-            it.translate(startPoint)
+            it.position = startPoint
             startPoint = startPoint.translateX(distance)
-
             modify(it)
         }
     }

@@ -18,6 +18,12 @@ class Line(from: Point = Point(0f, 0f),
     val length: Float
     val angle: Float
 
+    override var position: Point = Point(0f, 0f)
+        set(to) {
+            position = to
+            end = position.translate(Vector.fromLengthAndAngle(length, angle))
+        }
+
     constructor(from: Point = Point(0f, 0f),
                 length: Float = 1f,
                 angle: Float = Math.PI.toFloat() / 2f, image: Drawable? = null) :
@@ -27,11 +33,6 @@ class Line(from: Point = Point(0f, 0f),
         val vector = Vector(from, end)
         length = vector.length()
         angle = vector.angle()
-    }
-
-    override fun translate(to: Point) {
-        position = to
-        end = position.translate(Vector.fromLengthAndAngle(length, angle))
     }
 
     override fun toString(): String {

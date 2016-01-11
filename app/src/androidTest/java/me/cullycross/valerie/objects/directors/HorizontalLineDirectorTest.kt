@@ -29,8 +29,8 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
         val list: MutableList<Line> = ArrayList()
 
         for (i in 0..19) {
-            list.add(Line(image = Drawable {
-                Timber.d("Draw a line: ${toString()}")
+            list.add(Line(image = object: Drawable {
+                override fun draw() = Timber.d("Draw a line: ${toString()}")
             }))
         }
 
@@ -47,8 +47,8 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
         list.clear()
 
         for (i in 0..22) {
-            list.add(Line(image = Drawable {
-                Timber.d("Draw a line: ${toString()}")
+            list.add(Line(image = object: Drawable {
+                override fun draw() = Timber.d("Draw a line: ${toString()}")
             }))
         }
 

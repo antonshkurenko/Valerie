@@ -39,7 +39,7 @@ open class TranslateAction(protected val obj: Translatable,
 
         val percent = ((currentTime - startTime).toFloat() / time).clamp(0f, 1f)
 
-        obj.translate(startPosition.translate(
-                Vector.fromLengthAndAngle((distance * percent).toFloat(), angle)))
+        obj.position = startPosition.translate(
+                Vector.fromLengthAndAngle((distance * percent).toFloat(), angle))
     }
 }

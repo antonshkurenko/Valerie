@@ -12,13 +12,7 @@ import java.util.Random;
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-public class MediumShuffle<T> implements Shuffling<T> {
-
-  final Random mRandom;
-
-  public MediumShuffle() {
-    mRandom = new Random();
-  }
+public class MediumShuffle<T> extends AbstractShuffleAlgorithm<T> {
 
   @Override public List<T> shuffle(List<T> list, ShuffleCallback callback) {
 

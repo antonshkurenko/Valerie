@@ -1,14 +1,13 @@
-package graphics.programs
+package me.cullycross.valerie.graphics.programs
 
 
 import android.content.Context
+import android.opengl.GLES20.*
+import graphics.programs.A_POSITION
 import graphics.programs.AbstractShaderProgram
+import graphics.programs.U_COLOR
+import graphics.programs.U_MATRIX
 import me.cullycross.valerie.R
-
-import android.opengl.GLES20.glGetAttribLocation
-import android.opengl.GLES20.glGetUniformLocation
-import android.opengl.GLES20.glUniform4f
-import android.opengl.GLES20.glUniformMatrix4fv
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -39,7 +38,12 @@ class SingleColorProgram(context: Context) :
         positionLocation = glGetAttribLocation(mProgram, A_POSITION)
     }
 
-    fun setUniforms(matrix: FloatArray, r: Float, g: Float, b: Float) {
+    /**
+     * @param r
+     * @param g
+     * @param b from 0f to 1f (0..255)
+     */
+    fun setUniforms(matrix: FloatArray, r: Float = 0f, g: Float = 0f, b: Float = 0f) {
         glUniformMatrix4fv(uMatrixLocation, 1, false, matrix, 0)
         glUniform4f(uColorLocation, r, g, b, 1f)
     }

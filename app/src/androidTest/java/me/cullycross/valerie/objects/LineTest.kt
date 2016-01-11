@@ -22,12 +22,12 @@ class LineTest : TestCase() {
     }
 
     fun testTranslate() {
-        line.translate(Point(1f, 1f))
+        line.position = Point(1f, 1f)
 
         assertEquals("New end point x", 10f, line.getEnd().x)
         assertEquals("New end point y", 10f, line.getEnd().y)
 
-        line.translate(Point(-1f, -1f))
+        line.position = Point(-1f, -1f)
 
         assertEquals("New end point x", 8f, line.getEnd().x)
         assertEquals("New end point y", 8f, line.getEnd().y)
