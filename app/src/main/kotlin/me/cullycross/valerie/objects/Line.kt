@@ -27,7 +27,7 @@ class Line(from: Point = Point(0f, 0f),
     constructor(from: Point = Point(0f, 0f),
                 length: Float = 1f,
                 angle: Float = Math.PI.toFloat() / 2f, image: Drawable? = null) :
-    this(from, from.translate(Vector.fromLengthAndAngle(length, angle)), image)
+        this(from, from.translate(Vector.fromLengthAndAngle(length, angle)), image)
 
     init {
         val vector = Vector(from, end)
@@ -36,7 +36,7 @@ class Line(from: Point = Point(0f, 0f),
     }
 
     override fun toString(): String {
-        return "{Point: ${position.toString()}, length: $length, angle: $angle}"
+        return "Line: {Position: ${position.toString()}, length: $length, angle: $angle}"
     }
 
     fun getEnd(): Point {

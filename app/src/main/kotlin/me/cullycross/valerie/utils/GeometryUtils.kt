@@ -10,7 +10,7 @@ import java.util.Random
  * Follow me: @tonyshkurenko
  */
 
-class Point(val x: Float, val y: Float) {
+class Point(val x: Float = 0f, val y: Float = 0f) {
 
     fun translateX(distance: Float): Point {
         return Point(x + distance, y)

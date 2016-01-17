@@ -58,6 +58,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         return this
     }
 
+    // fixme(tonyshkurenko), 1/17/16:  fix this, cause it doesn't work
     private fun appendLine(from: Point, startWidth: Float, to: Point, endWidth: Float):
             ViewObjectBuilder {
         val vector = Vector(from, to)
