@@ -1,8 +1,10 @@
 package me.cullycross.valerie.graphics.renderers
 
 import android.content.Context
+import graphics.utils.VertexArray
 import me.cullycross.valerie.graphics.objects.ViewObjectBuilder
 import me.cullycross.valerie.graphics.programs.SingleColorProgram
+import me.cullycross.valerie.graphics.utils.POSITION_COMPONENT_COUNT
 import me.cullycross.valerie.utils.Point
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
@@ -28,11 +30,25 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
 
         program?.useProgram()
 
-        val drawables =
-                ViewObjectBuilder.createCircle(Point(0.5f, 0.5f), 0.15f, 32, aspectRatio).drawableList
+        val data = ViewObjectBuilder.createCircle(Point(0f, 0f), 0.15f, 32, aspectRatio)
 
-        positionObjectInScene(-0.5f, 0.5f)
+        val drawables =
+                data.drawableList
+
+        val vertexArray = VertexArray(data.vertexData)
+
+        positionObjectInScene(0f, 0f)
+
         program?.setUniforms(modelProjectionMatrix, 1f)
+
+        if (program != null) {
+
+            val positionLocation = program?.positionLocation
+            if (positionLocation != null) {
+                vertexArray.setVertexAttribPointer(0, positionLocation,
+                        POSITION_COMPONENT_COUNT, 0);
+            }
+        }
 
         drawables.forEach {
             it.draw()

@@ -1,7 +1,7 @@
 package graphics.utils
 
 import android.opengl.GLES20.*
-import graphics.utils.BYTES_PER_FLOAT
+import me.cullycross.valerie.graphics.utils.BYTES_PER_FLOAT
 import java.nio.ByteBuffer
 import java.nio.ByteOrder
 import java.nio.FloatBuffer

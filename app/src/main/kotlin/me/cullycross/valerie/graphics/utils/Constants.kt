@@ -1,4 +1,4 @@
-package graphics.utils
+package me.cullycross.valerie.graphics.utils
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -9,3 +9,6 @@ package graphics.utils
  */
 
 const val BYTES_PER_FLOAT = 4
+
+const val POSITION_COMPONENT_COUNT = 2
+
