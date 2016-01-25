@@ -54,8 +54,10 @@ class Vector(val x: Float, val y: Float) {
 
     companion object {
         fun fromLengthAndAngle(length: Float, angle: Float): Vector {
-            return Vector(length * Math.sin(angle.toDouble()).toFloat(),
-                    length * Math.cos(angle.toDouble()).toFloat())
+            /*return Vector(length * Math.sin(angle.toDouble()).toFloat(),
+                    length * Math.cos(angle.toDouble()).toFloat())*/
+            return Vector(length * Math.cos(angle.toDouble()).toFloat(),
+                    length * Math.sin(angle.toDouble()).toFloat())
         }
     }
 

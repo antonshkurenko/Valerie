@@ -1,6 +1,7 @@
 package me.cullycross.valerie.graphics.renderers
 
 import android.content.Context
+import android.opengl.GLES20
 import graphics.utils.VertexArray
 import me.cullycross.valerie.graphics.objects.ViewObjectBuilder
 import me.cullycross.valerie.graphics.programs.SingleColorProgram
@@ -32,7 +33,19 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
 
         program?.useProgram()
 
-        val circleData = ViewObjectBuilder.createCircle(Point(), 0.15f, 32, aspectRatio)
+        var lineData = ViewObjectBuilder.createLine(Point(), 0.15f, Point(0.2f, 0.2f), 0.15f)
+        var lineDrawables = lineData.drawableList
+        var lineVertexArray = VertexArray(lineData.vertexData)
+
+        positionObjectInScene(0f, 0f)
+        program?.setUniforms(modelProjectionMatrix, g = 1f)
+        lineVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
+                POSITION_COMPONENT_COUNT, 0);
+        lineDrawables.forEach {
+            it.draw()
+        }
+
+        val circleData = ViewObjectBuilder.createCircle(Point(), 0.02f, 32, aspectRatio)
         val circleDrawables = circleData.drawableList
         val circleVertexArray = VertexArray(circleData.vertexData)
 
@@ -44,7 +57,7 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
             it.draw()
         }
 
-        positionObjectInScene(0.5f, 0.5f)
+        positionObjectInScene(0.2f, 0.2f)
         program?.setUniforms(modelProjectionMatrix, 1f)
         circleVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
                 POSITION_COMPONENT_COUNT, 0);
@@ -52,17 +65,9 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
             it.draw()
         }
 
-        val lineData = ViewObjectBuilder.createLine(Point(), 0.15f, 0.6f, 0.1f)
-        val lineDrawables = lineData.drawableList
-        val lineVertexArray = VertexArray(lineData.vertexData)
-
-        positionObjectInScene(-0.5f, -0.5f)
-        program?.setUniforms(modelProjectionMatrix, g = 1f)
-        lineVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
-                POSITION_COMPONENT_COUNT, 0);
-        lineDrawables.forEach {
-            it.draw()
-        }
+        /*lineData = ViewObjectBuilder.createLine(Point(), 0.15f, 0.6f, 0.1f)
+        lineDrawables = lineData.drawableList
+        lineVertexArray = VertexArray(lineData.vertexData)
 
         positionObjectInScene(0.5f, -0.5f)
         program?.setUniforms(modelProjectionMatrix, g = 1f)
@@ -70,6 +75,6 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
                 POSITION_COMPONENT_COUNT, 0);
         lineDrawables.forEach {
             it.draw()
-        }
+        }*/
     }
 }

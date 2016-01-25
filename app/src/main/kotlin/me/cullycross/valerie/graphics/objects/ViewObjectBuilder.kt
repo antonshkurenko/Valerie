@@ -49,7 +49,6 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             vertexData[offset++] = circle.center.x + circle.radius * c / aspectRatio
 
             vertexData[offset++] = circle.center.y + circle.radius * s
-
         }
 
         drawList.add(object : Drawable {
@@ -62,12 +61,15 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
     private fun appendLine(from: Point, startWidth: Float, to: Point, endWidth: Float):
             ViewObjectBuilder {
         val vector = Vector(from, to)
-        val perpendicular = vector.perpendicularCCW()
 
-        val a = from.translate(perpendicular.scale(startWidth / 2f))
-        val b = from.translate(perpendicular.scale(-startWidth / 2f))
-        val c = to.translate(perpendicular.scale(endWidth / 2f))
-        val d = to.translate(perpendicular.scale(-endWidth / 2f))
+        val angle = vector.perpendicularCCW().angle()
+        val halfStartLength = startWidth / 2f
+        val halfEndLength = endWidth / 2f
+
+        val a = from.translate(Vector.fromLengthAndAngle(halfStartLength, angle))
+        val b = from.translate(Vector.fromLengthAndAngle(-halfStartLength, angle))
+        val c = to.translate(Vector.fromLengthAndAngle(halfEndLength, angle))
+        val d = to.translate(Vector.fromLengthAndAngle(-halfEndLength, angle))
 
         val startVertex = offset / FLOATS_PER_VERTEX
 
@@ -83,12 +85,12 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
          *
          */
         // Triangle strip ABDC
-        // A
-        vertexData[offset++] = a.x
-        vertexData[offset++] = a.y
         // B
         vertexData[offset++] = b.x
         vertexData[offset++] = b.y
+        // A
+        vertexData[offset++] = a.x
+        vertexData[offset++] = a.y
         // D
         vertexData[offset++] = d.x
         vertexData[offset++] = d.y
@@ -97,7 +99,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         vertexData[offset++] = c.y
 
         drawList.add(object : Drawable {
-            override fun draw() = glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 8)
+            override fun draw() = glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 4)
         })
         return this
     }
@@ -121,12 +123,12 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         }
 
         fun createLine(from: Point, length: Float, angle: Float, width: Float): GeneratedData {
-            return ViewObjectBuilder(8).appendLine(
+            return ViewObjectBuilder(4).appendLine(
                     from, width, from.translate(Vector(length, angle)), width).build()
         }
 
         fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float): GeneratedData {
-            return ViewObjectBuilder(8).appendLine(from, startWidth, to, endWidth).build()
+            return ViewObjectBuilder(4).appendLine(from, startWidth, to, endWidth).build()
         }
 
         fun sizeOfCircleInVertices(numPoints: Int): Int {
