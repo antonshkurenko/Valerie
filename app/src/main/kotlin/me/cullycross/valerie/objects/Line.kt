@@ -2,6 +2,7 @@ package me.cullycross.valerie.objects
 
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
+import timber.log.Timber
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -20,7 +21,7 @@ class Line(from: Point = Point(0f, 0f),
 
     override var position: Point = Point(0f, 0f)
         set(to) {
-            position = to
+            field = to
             end = position.translate(Vector.fromLengthAndAngle(length, angle))
         }
 

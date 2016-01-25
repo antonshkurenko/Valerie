@@ -1,13 +1,16 @@
 package me.cullycross.valerie.graphics.renderers
 
 import android.content.Context
-import android.opengl.GLES20
 import graphics.utils.VertexArray
 import me.cullycross.valerie.graphics.objects.ViewObjectBuilder
 import me.cullycross.valerie.graphics.programs.SingleColorProgram
 import me.cullycross.valerie.graphics.utils.POSITION_COMPONENT_COUNT
+import me.cullycross.valerie.objects.Drawable
+import me.cullycross.valerie.objects.Line
+import me.cullycross.valerie.objects.directors.Director
+import me.cullycross.valerie.objects.directors.HorizontalLineDirector
 import me.cullycross.valerie.utils.Point
-import me.cullycross.valerie.utils.Vector
+import java.util.*
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -34,7 +37,37 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
 
         program?.useProgram()
 
-        var lineData = ViewObjectBuilder.createLine(Point(), 0.1f, Point(0.4f, 0.2f), 0.07f, aspectRatio)
+        val director: Director<Line> = HorizontalLineDirector(0.04f)
+
+        val lineList: MutableList<Line> = ArrayList()
+
+        val lineData = ViewObjectBuilder.createLine(Point(), 0.02f, Point(0.1f, 0.1f), 0.01f, aspectRatio)
+        val lineDrawables = lineData.drawableList
+        val lineVertexArray = VertexArray(lineData.vertexData)
+
+        for (i in 0..10) {
+            val tempLine = Line()
+            tempLine.image = object : Drawable {
+                override fun draw() {
+                    positionObjectInScene(tempLine.position.x, tempLine.position.y)
+                    program?.setUniforms(modelProjectionMatrix, g = 1f)
+                    lineVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
+                            POSITION_COMPONENT_COUNT, 0);
+                    lineDrawables.forEach {
+                        it.draw()
+                    }
+                }
+            }
+            lineList.add(tempLine)
+        }
+
+        director.direct(Point(), lineList)
+
+        for(line in lineList) {
+            line.draw()
+        }
+
+        /*var lineData = ViewObjectBuilder.createLine(Point(), 0.1f, Point(0.4f, 0.2f), 0.07f, aspectRatio)
         var lineDrawables = lineData.drawableList
         var lineVertexArray = VertexArray(lineData.vertexData)
 
@@ -64,6 +97,6 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
                 POSITION_COMPONENT_COUNT, 0);
         circleDrawables.forEach {
             it.draw()
-        }
+        }*/
     }
 }
