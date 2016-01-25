@@ -57,19 +57,21 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         return this
     }
 
-    // fixme(tonyshkurenko), 1/17/16:  fix this, cause it doesn't work
-    private fun appendLine(from: Point, startWidth: Float, to: Point, endWidth: Float):
+    private fun appendLine(from: Point, startWidth: Float, to: Point, endWidth: Float, aspectRatio: Float):
             ViewObjectBuilder {
+
         val vector = Vector(from, to)
 
         val angle = vector.perpendicularCCW().angle()
         val halfStartLength = startWidth / 2f
         val halfEndLength = endWidth / 2f
 
-        val a = from.translate(Vector.fromLengthAndAngle(halfStartLength, angle))
-        val b = from.translate(Vector.fromLengthAndAngle(-halfStartLength, angle))
-        val c = to.translate(Vector.fromLengthAndAngle(halfEndLength, angle))
-        val d = to.translate(Vector.fromLengthAndAngle(-halfEndLength, angle))
+
+        val factor = 1f / aspectRatio
+        val a = from.translate(Vector.fromLengthAndAngle(halfStartLength, angle).scaleX(factor).scaleY(aspectRatio))
+        val b = from.translate(Vector.fromLengthAndAngle(-halfStartLength, angle).scaleX(factor).scaleY(aspectRatio))
+        val c = to.translate(Vector.fromLengthAndAngle(halfEndLength, angle).scaleX(factor).scaleY(aspectRatio))
+        val d = to.translate(Vector.fromLengthAndAngle(-halfEndLength, angle).scaleX(factor).scaleY(aspectRatio))
 
         val startVertex = offset / FLOATS_PER_VERTEX
 
@@ -84,7 +86,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
          *  B --------------- C
          *
          */
-        // Triangle strip ABDC
+        // Triangle strip BADC
         // B
         vertexData[offset++] = b.x
         vertexData[offset++] = b.y
@@ -95,7 +97,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         vertexData[offset++] = d.x
         vertexData[offset++] = d.y
         // C
-        vertexData[offset++] = c.y
+        vertexData[offset++] = c.x
         vertexData[offset++] = c.y
 
         drawList.add(object : Drawable {
@@ -122,13 +124,13 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             return ViewObjectBuilder(size).appendCircle(circle, numPoints, aspectRatio).build()
         }
 
-        fun createLine(from: Point, length: Float, angle: Float, width: Float): GeneratedData {
+        fun createLine(from: Point, length: Float, angle: Float, width: Float, aspectRatio: Float): GeneratedData {
             return ViewObjectBuilder(4).appendLine(
-                    from, width, from.translate(Vector(length, angle)), width).build()
+                    from, width, from.translate(Vector.fromLengthAndAngle(length, angle)), width, aspectRatio).build()
         }
 
-        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float): GeneratedData {
-            return ViewObjectBuilder(4).appendLine(from, startWidth, to, endWidth).build()
+        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float, aspectRatio: Float): GeneratedData {
+            return ViewObjectBuilder(4).appendLine(from, startWidth, to, endWidth, aspectRatio).build()
         }
 
         fun sizeOfCircleInVertices(numPoints: Int): Int {

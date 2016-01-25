@@ -7,6 +7,7 @@ import me.cullycross.valerie.graphics.objects.ViewObjectBuilder
 import me.cullycross.valerie.graphics.programs.SingleColorProgram
 import me.cullycross.valerie.graphics.utils.POSITION_COMPONENT_COUNT
 import me.cullycross.valerie.utils.Point
+import me.cullycross.valerie.utils.Vector
 import javax.microedition.khronos.egl.EGLConfig
 import javax.microedition.khronos.opengles.GL10
 
@@ -33,7 +34,7 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
 
         program?.useProgram()
 
-        var lineData = ViewObjectBuilder.createLine(Point(), 0.15f, Point(0.2f, 0.2f), 0.15f)
+        var lineData = ViewObjectBuilder.createLine(Point(), 0.1f, Point(0.4f, 0.2f), 0.07f, aspectRatio)
         var lineDrawables = lineData.drawableList
         var lineVertexArray = VertexArray(lineData.vertexData)
 
@@ -57,24 +58,12 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
             it.draw()
         }
 
-        positionObjectInScene(0.2f, 0.2f)
+        positionObjectInScene(0.4f, 0.2f)
         program?.setUniforms(modelProjectionMatrix, 1f)
         circleVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
                 POSITION_COMPONENT_COUNT, 0);
         circleDrawables.forEach {
             it.draw()
         }
-
-        /*lineData = ViewObjectBuilder.createLine(Point(), 0.15f, 0.6f, 0.1f)
-        lineDrawables = lineData.drawableList
-        lineVertexArray = VertexArray(lineData.vertexData)
-
-        positionObjectInScene(0.5f, -0.5f)
-        program?.setUniforms(modelProjectionMatrix, g = 1f)
-        lineVertexArray.setVertexAttribPointer(0, program?.positionLocation ?: 0,
-                POSITION_COMPONENT_COUNT, 0);
-        lineDrawables.forEach {
-            it.draw()
-        }*/
     }
 }

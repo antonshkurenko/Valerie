@@ -73,6 +73,14 @@ class Vector(val x: Float, val y: Float) {
         return Vector(x * f, y * f)
     }
 
+    fun scaleX(f: Float): Vector {
+        return Vector(x * f, y)
+    }
+
+    fun scaleY(f: Float): Vector {
+        return Vector(x, y * f)
+    }
+
     fun extend2d(add: Float): Vector {
         return Vector(x * (1 + Math.abs(add / x)), y * (1 + Math.abs(add / y)))
     }
