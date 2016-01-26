@@ -18,8 +18,6 @@ import javax.microedition.khronos.opengles.GL10
 abstract class Abstract2dRenderer(protected val context: Context) : GLSurfaceView.Renderer {
 
     protected val projectionMatrix = FloatArray(16)
-    protected val modelMatrix = FloatArray(16)
-    protected val modelProjectionMatrix = FloatArray(16)
 
     protected var aspectRatio: Float = 0f
 
@@ -41,11 +39,5 @@ abstract class Abstract2dRenderer(protected val context: Context) : GLSurfaceVie
 
     override fun onDrawFrame(gl: GL10) {
         glClear(GL_COLOR_BUFFER_BIT)
-    }
-
-    protected fun positionObjectInScene(x: Float, y: Float) {
-        setIdentityM(modelMatrix, 0)
-        translateM(modelMatrix, 0, x, y, 0f)
-        multiplyMM(modelProjectionMatrix, 0, projectionMatrix, 0, modelMatrix, 0)
     }
 }

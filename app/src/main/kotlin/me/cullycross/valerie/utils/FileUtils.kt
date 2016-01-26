@@ -25,7 +25,6 @@ fun write(ctx: Context, fileName: String,
     } catch (e: IOException) {
         e.printStackTrace()
     }
-
 }
 
 fun read(ctx: Context, fileName: String): String {

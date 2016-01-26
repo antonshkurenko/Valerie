@@ -12,12 +12,18 @@ import timber.log.Timber
  * Follow me: @tonyshkurenko
  */
 
+// todo(tonyshkurenko), 1/26/16:  generate base drawable for the line
 class Line(from: Point = Point(0f, 0f),
            private var end: Point,
-           image: Drawable? = null) : BaseObject(from, image) {
+           image: Drawable? = null) : BaseObject(from, image), Rotatable {
 
     val length: Float
-    val angle: Float
+
+    override var angle: Float = 0f
+        set(newAngle) {
+            field = newAngle
+            end = position.translate(Vector.fromLengthAndAngle(length, newAngle))
+        }
 
     override var position: Point = Point(0f, 0f)
         set(to) {
@@ -26,7 +32,7 @@ class Line(from: Point = Point(0f, 0f),
         }
 
     constructor(from: Point = Point(0f, 0f),
-                length: Float = 1f,
+                length: Float = 0.15f,
                 angle: Float = Math.PI.toFloat() / 2f, image: Drawable? = null) :
         this(from, from.translate(Vector.fromLengthAndAngle(length, angle)), image)
 
@@ -37,7 +43,7 @@ class Line(from: Point = Point(0f, 0f),
     }
 
     override fun toString(): String {
-        return "Line: {Position: ${position.toString()}, length: $length, angle: $angle}"
+        return "Line: {Position: ${position.toString()}, length: $length, angle: $angle, end: ${end.toString()}}"
     }
 
     fun getEnd(): Point {

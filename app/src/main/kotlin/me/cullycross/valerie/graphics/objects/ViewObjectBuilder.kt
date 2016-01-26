@@ -2,6 +2,7 @@ package me.cullycross.valerie.graphics.objects
 
 
 import android.opengl.GLES20.*
+import graphics.utils.VertexArray
 import me.cullycross.valerie.objects.Drawable
 import me.cullycross.valerie.utils.Circle
 import me.cullycross.valerie.utils.Point
@@ -47,7 +48,6 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             val s = Math.sin(angleInRadians.toDouble()).toFloat()
 
             vertexData[offset++] = circle.center.x + circle.radius * c / aspectRatio
-
             vertexData[offset++] = circle.center.y + circle.radius * s
         }
 
@@ -107,10 +107,8 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
     }
 
     private fun build(): GeneratedData {
-        return GeneratedData(vertexData, drawList)
+        return GeneratedData(VertexArray(vertexData), drawList)
     }
-
-    data class GeneratedData(val vertexData: FloatArray, val drawableList: List<Drawable>)
 
     companion object {
 
@@ -124,12 +122,21 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             return ViewObjectBuilder(size).appendCircle(circle, numPoints, aspectRatio).build()
         }
 
-        fun createLine(from: Point, length: Float, angle: Float, width: Float, aspectRatio: Float): GeneratedData {
+        fun createLine(from: Point = Point(),
+                       length: Float = 0.1f,
+                       angle: Float,
+                       startWidth: Float = 0.02f,
+                       endWidth: Float = startWidth,
+                       aspectRatio: Float): GeneratedData {
             return ViewObjectBuilder(4).appendLine(
-                    from, width, from.translate(Vector.fromLengthAndAngle(length, angle)), width, aspectRatio).build()
+                    from, startWidth, from.translate(Vector.fromLengthAndAngle(length, angle)), endWidth, aspectRatio).build()
         }
 
-        fun createLine(from: Point, startWidth: Float, to: Point, endWidth: Float, aspectRatio: Float): GeneratedData {
+        fun createLine(from: Point = Point(),
+                       startWidth: Float = 0.02f,
+                       to: Point,
+                       endWidth: Float = startWidth,
+                       aspectRatio: Float): GeneratedData {
             return ViewObjectBuilder(4).appendLine(from, startWidth, to, endWidth, aspectRatio).build()
         }
 
@@ -137,4 +144,6 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             return 1 + (numPoints + 1)
         }
     }
+
+    data class GeneratedData(val vertexData: VertexArray, val drawableList: List<Drawable>)
 }
