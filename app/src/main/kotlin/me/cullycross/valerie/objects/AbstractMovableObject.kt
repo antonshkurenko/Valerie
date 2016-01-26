@@ -11,7 +11,7 @@ import me.cullycross.valerie.utils.Vector
  * Follow me: @tonyshkurenko
  */
 
-abstract class AbstractMovableObject(position: Point, var speed: Vector) : BaseObject(position), Movable {
+open class AbstractMovableObject(position: Point, var speed: Vector) : BaseObject(position), Movable {
 
     override fun move() {
         position = position.translate(speed)

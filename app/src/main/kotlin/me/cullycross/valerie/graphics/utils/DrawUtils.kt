@@ -10,8 +10,13 @@ import android.opengl.Matrix
  * Follow me: @tonyshkurenko
  */
 
-fun positionObjectInScene(projectionMatrix: FloatArray,
-                          x: Float,
+private val projectionMatrix: FloatArray by lazy {
+    val temp = FloatArray(16)
+    Matrix.orthoM(temp, 0, -1f, 1f, -1f, 1f, -1f, 1f)
+    temp
+}
+
+fun positionObjectInScene(x: Float,
                           y: Float): FloatArray {
 
     val modelMatrix = FloatArray(16)
@@ -23,8 +28,7 @@ fun positionObjectInScene(projectionMatrix: FloatArray,
     return modelProjectionMatrix
 }
 
-fun positionObjectInScene(projectionMatrix: FloatArray,
-                          x: Float,
+fun positionObjectInScene(x: Float,
                           y: Float,
                           angle: Float): FloatArray {
 

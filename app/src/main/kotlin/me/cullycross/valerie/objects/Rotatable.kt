@@ -7,7 +7,7 @@ package me.cullycross.valerie.objects
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-interface Rotatable: Translatable { // todo(tonyshkurenko), 1/26/16:  remove this inheritance later
+interface Rotatable {
     /**
      * change setter to rotate whole object to angle, not only change property
      */

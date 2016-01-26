@@ -17,8 +17,6 @@ import javax.microedition.khronos.opengles.GL10
  */
 abstract class Abstract2dRenderer(protected val context: Context) : GLSurfaceView.Renderer {
 
-    protected val projectionMatrix = FloatArray(16)
-
     protected var aspectRatio: Float = 0f
 
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
@@ -32,9 +30,6 @@ abstract class Abstract2dRenderer(protected val context: Context) : GLSurfaceVie
         aspectRatio = width.toFloat() / height.toFloat()
 
         Timber.i("Width is %d, height is %d, aspect is %f", width, height, aspectRatio)
-
-        // use aspect ratio not here, but later
-        orthoM(projectionMatrix, 0, -1f, 1f, -1f, 1f, -1f, 1f)
     }
 
     override fun onDrawFrame(gl: GL10) {

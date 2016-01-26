@@ -1,7 +1,7 @@
 package me.cullycross.valerie.objects.directors
 
 import me.cullycross.valerie.objects.BaseObject
-import me.cullycross.valerie.objects.Rotatable
+import me.cullycross.valerie.objects.BaseRotatableObject
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
 
@@ -30,15 +30,6 @@ open class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Directo
             it.position = startPoint
             startPoint = startPoint.translateX(distance)
             modify(it)
-        }
-    }
-
-    companion object {
-
-        fun <T: Rotatable> sunModifier(center: Point): (T) -> Unit {
-            return {
-                it.angle = Vector(center, it.position).angle()
-            }
         }
     }
 }

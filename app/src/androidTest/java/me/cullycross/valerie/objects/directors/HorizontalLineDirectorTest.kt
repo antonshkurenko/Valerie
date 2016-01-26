@@ -1,8 +1,8 @@
 package me.cullycross.valerie.objects.directors
 
 import android.test.AndroidTestCase
+import me.cullycross.valerie.objects.BaseRotatableObject
 import me.cullycross.valerie.objects.Drawable
-import me.cullycross.valerie.objects.Line
 import me.cullycross.valerie.utils.Point
 import timber.log.Timber
 import java.util.*
@@ -16,7 +16,7 @@ import java.util.*
  */
 class HorizontalLineDirectorTest : AndroidTestCase() {
 
-    var director: Director<Line> = HorizontalLineDirector(1f)
+    var director: Director<BaseRotatableObject> = HorizontalLineDirector(1f)
 
     override fun setUp() {
         super.setUp()
@@ -26,10 +26,10 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
 
     fun testDirect() {
 
-        val list: MutableList<Line> = ArrayList()
+        val list: MutableList<BaseRotatableObject> = ArrayList()
 
         for (i in 0..19) {
-            list.add(Line(image = object: Drawable {
+            list.add(BaseRotatableObject(image = object: Drawable {
                 override fun draw() = Timber.d("Draw a line: ${toString()}")
             }))
         }
@@ -47,7 +47,7 @@ class HorizontalLineDirectorTest : AndroidTestCase() {
         list.clear()
 
         for (i in 0..22) {
-            list.add(Line(image = object: Drawable {
+            list.add(BaseRotatableObject(image = object: Drawable {
                 override fun draw() = Timber.d("Draw a line: ${toString()}")
             }))
         }

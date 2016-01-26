@@ -1,5 +1,6 @@
-package me.cullycross.valerie.graphics.objects
+package me.cullycross.valerie.graphics.objects.factories
 
+import me.cullycross.valerie.graphics.objects.ViewObjectBuilder
 import me.cullycross.valerie.utils.Point
 
 /**
@@ -15,19 +16,19 @@ import me.cullycross.valerie.utils.Point
  */
 class DefaultViewFactory(val aspectRatio: Float): ViewFactory {
 
-    private val line: ViewObjectBuilder.GeneratedData by lazy {
+    private val lineInstance: ViewObjectBuilder.GeneratedData by lazy {
         ViewObjectBuilder.createLine(to = Point(y = 0.1f), aspectRatio = aspectRatio)
     }
 
-    private val circle: ViewObjectBuilder.GeneratedData by lazy {
+    private val circleInstance: ViewObjectBuilder.GeneratedData by lazy {
         ViewObjectBuilder.createCircle(Point(), 0.02f, 32, aspectRatio)
     }
 
-    override fun createLine(): ViewObjectBuilder.GeneratedData {
-        return line
+    override fun getLine(): ViewObjectBuilder.GeneratedData {
+        return lineInstance
     }
 
-    override fun createCircle(): ViewObjectBuilder.GeneratedData {
-        return circle
+    override fun getCircle(): ViewObjectBuilder.GeneratedData {
+        return circleInstance
     }
 }
