@@ -1,4 +1,4 @@
-package me.cullycross.valerie.objects.actions
+package me.cullycross.valerie.mechanics.actions
 
 /**
  * Created by: Anton Shkurenko (cullycross)

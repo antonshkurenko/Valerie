@@ -1,6 +1,6 @@
-package me.cullycross.valerie.objects.directors.modifiers
+package me.cullycross.valerie.mechanics.directors.modifiers
 
-import me.cullycross.valerie.objects.BaseRotatableObject
+import me.cullycross.valerie.mechanics.objects.BaseRotatableObject
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
 

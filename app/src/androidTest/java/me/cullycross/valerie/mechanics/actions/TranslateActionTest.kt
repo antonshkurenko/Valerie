@@ -1,7 +1,7 @@
-package me.cullycross.valerie.objects.actions
+package me.cullycross.valerie.mechanics.actions
 
 import android.test.AndroidTestCase
-import me.cullycross.valerie.objects.BaseObject
+import me.cullycross.valerie.mechanics.objects.BaseObject
 import me.cullycross.valerie.utils.Point
 import timber.log.Timber
 

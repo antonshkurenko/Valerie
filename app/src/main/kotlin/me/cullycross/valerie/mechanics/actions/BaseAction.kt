@@ -1,4 +1,4 @@
-package me.cullycross.valerie.objects.actions
+package me.cullycross.valerie.mechanics.actions
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -8,12 +8,10 @@ package me.cullycross.valerie.objects.actions
  * Follow me: @tonyshkurenko
  */
 abstract class BaseAction(protected val time: Long,
-                          protected val callback: Action.Callback?) : Action {
+                          protected val callback: Action.Callback? = null) : Action {
 
-    constructor(time: Long) : this(time, null)
-
-    protected  var startTime: Long = -1L
-    protected  var currentTime: Long = 0L
+    protected var startTime: Long = -1L
+    protected var currentTime: Long = 0L
 
     protected abstract fun onStep(delta: Long);
 
@@ -30,7 +28,7 @@ abstract class BaseAction(protected val time: Long,
             throw IllegalArgumentException("Delta can not be < 0")
         }
 
-        if(!isActive()) {
+        if (!isActive()) {
             throw IllegalStateException("Action is not started!")
         }
 
@@ -43,7 +41,6 @@ abstract class BaseAction(protected val time: Long,
         }
     }
 
-    override fun isActive(): Boolean {
-        return startTime != -1L && currentTime - startTime < time
-    }
+    override fun isActive() = startTime != -1L && currentTime - startTime < time
+
 }

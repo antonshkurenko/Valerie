@@ -27,9 +27,16 @@ public interface Shuffling<T> {
     /**
      * Called when shuffling two elements
      *
-     * @param addedTo index (maybe to another array)
-     * @param randomIndex index (from source array)
+     * @param newIndex index (maybe to another array)
+     * @param pickedFromIndex index (from source array)
      */
-    void onShuffle(int addedTo, int randomIndex);
+    void onShuffle(int newIndex, int pickedFromIndex);
+
+    /**
+     * Called, when we move to the next element
+     *
+     * @param index of the element
+     */
+    void onChooseIndex(int index);
   }
 }

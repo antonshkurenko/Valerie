@@ -22,6 +22,11 @@ public class FastShuffle<T> extends AbstractShuffleAlgorithm<T> {
 
     while (n > 0) {
       i = (int) Math.round(Math.floor(mRandom.nextDouble() * n--));
+
+      if (callback != null) {
+        callback.onChooseIndex(i);
+      }
+
       Collections.swap(sourceCopy, n, i);
       if (callback != null) {
         callback.onShuffle(n, i);

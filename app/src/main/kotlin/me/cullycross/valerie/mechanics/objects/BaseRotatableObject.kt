@@ -1,7 +1,7 @@
-package me.cullycross.valerie.objects
+package me.cullycross.valerie.mechanics.objects
 
+import me.cullycross.valerie.graphics.utils.positionObjectInScene
 import me.cullycross.valerie.utils.Point
-import me.cullycross.valerie.utils.Vector
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -15,9 +15,8 @@ open class BaseRotatableObject(from: Point = Point(0f, 0f),
                                override var angle: Float = Math.PI.toFloat() / 2f,
                                image: Drawable? = null) : BaseObject(from, image), Rotatable {
 
-    override var position: Point = Point(0f, 0f)
+    override val matrix: FloatArray
+        get() = positionObjectInScene(position.x, position.y, angle)
 
-    override fun toString(): String {
-        return "BaseRotatable: {Position: ${position.toString()}, angle: $angle}"
-    }
+    override fun toString() = "BaseRotatable: {Position: ${position.toString()}, angle: $angle}"
 }

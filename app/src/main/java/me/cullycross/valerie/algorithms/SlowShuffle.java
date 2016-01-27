@@ -24,6 +24,11 @@ public class SlowShuffle<T> extends AbstractShuffleAlgorithm<T> {
     while (n > 0) {
 
       i = (int) Math.round(Math.floor(mRandom.nextDouble() * size));
+
+      if (callback != null) {
+        callback.onChooseIndex(i);
+      }
+
       final T object = sourceCopy.get(i);
       if (object != null) {
         copy.add(object);

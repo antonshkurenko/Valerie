@@ -1,6 +1,6 @@
-package me.cullycross.valerie.objects.directors
+package me.cullycross.valerie.mechanics.directors
 
-import me.cullycross.valerie.objects.BaseObject
+import me.cullycross.valerie.mechanics.objects.BaseObject
 import me.cullycross.valerie.utils.Point
 
 /**

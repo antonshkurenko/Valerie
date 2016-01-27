@@ -1,7 +1,6 @@
-package me.cullycross.valerie.objects.actions
+package me.cullycross.valerie.mechanics.actions
 
-import me.cullycross.valerie.objects.BaseObject
-import me.cullycross.valerie.objects.Translatable
+import me.cullycross.valerie.mechanics.objects.Translatable
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
 import me.cullycross.valerie.utils.clamp
@@ -14,12 +13,11 @@ import me.cullycross.valerie.utils.clamp
  * Follow me: @tonyshkurenko
  */
 // todo(tonyshkurenko), 1/3/16:  should it be open?
+// todo(tonyshkurenko), 1/27/16:  add transpolation,
 open class TranslateAction(protected val obj: Translatable,
                            protected val to: Point,
-                           time: Long,
-                           callback: Action.Callback?) : BaseAction(time, callback) {
-
-    constructor(obj: BaseObject, to: Point, time: Long) : this(obj, to, time, null)
+                           time: Long = 5000L,
+                           callback: Action.Callback? = null) : BaseAction(time, callback) {
 
     protected lateinit var startPosition: Point;
 

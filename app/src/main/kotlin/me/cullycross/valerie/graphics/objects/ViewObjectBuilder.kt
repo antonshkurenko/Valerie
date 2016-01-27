@@ -3,7 +3,6 @@ package me.cullycross.valerie.graphics.objects
 
 import android.opengl.GLES20.*
 import graphics.utils.VertexArray
-import me.cullycross.valerie.objects.Drawable
 import me.cullycross.valerie.utils.Circle
 import me.cullycross.valerie.utils.Point
 import me.cullycross.valerie.utils.Vector
@@ -22,7 +21,7 @@ const val FLOATS_PER_VERTEX = 2 // X, Y
 class ViewObjectBuilder public constructor(sizeInVertices: Int) {
 
     private val vertexData: FloatArray
-    private val drawList = ArrayList<Drawable>()
+    private val drawList = ArrayList<() -> Unit>()
     private var offset = 0
 
     init {
@@ -51,9 +50,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
             vertexData[offset++] = circle.center.y + circle.radius * s
         }
 
-        drawList.add(object : Drawable {
-            override fun draw() = glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices)
-        })
+        drawList.add { glDrawArrays(GL_TRIANGLE_FAN, startVertex, numVertices) }
         return this
     }
 
@@ -100,9 +97,7 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         vertexData[offset++] = c.x
         vertexData[offset++] = c.y
 
-        drawList.add(object : Drawable {
-            override fun draw() = glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 4)
-        })
+        drawList.add { glDrawArrays(GL_TRIANGLE_STRIP, startVertex, 4) }
         return this
     }
 
@@ -145,5 +140,5 @@ class ViewObjectBuilder public constructor(sizeInVertices: Int) {
         }
     }
 
-    data class GeneratedData(val vertexData: VertexArray, val drawableList: List<Drawable>)
+    data class GeneratedData(val vertexData: VertexArray, val drawableList: List<() -> Unit>)
 }

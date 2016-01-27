@@ -1,4 +1,4 @@
-package me.cullycross.valerie.objects
+package me.cullycross.valerie.mechanics.objects
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -9,5 +9,5 @@ package me.cullycross.valerie.objects
  */
 
 interface Drawable {
-    fun draw()
+    fun draw(obj: BaseObject)
 }

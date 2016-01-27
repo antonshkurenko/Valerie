@@ -1,6 +1,6 @@
-package me.cullycross.valerie.objects.directors.modifiers
+package me.cullycross.valerie.mechanics.directors.modifiers
 
-import me.cullycross.valerie.objects.BaseObject
+import me.cullycross.valerie.mechanics.objects.BaseObject
 
 /**
  * Created by: Anton Shkurenko (cullycross)

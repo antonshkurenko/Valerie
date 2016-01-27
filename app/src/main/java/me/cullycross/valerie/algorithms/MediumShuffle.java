@@ -24,6 +24,11 @@ public class MediumShuffle<T> extends AbstractShuffleAlgorithm<T> {
 
     while (n > 0) {
       i = (int) Math.round(Math.floor(mRandom.nextDouble() * n--));
+
+      if (callback != null) {
+        callback.onChooseIndex(i);
+      }
+
       copy.add(sourceCopy.remove(i));
       if (callback != null) {
         callback.onShuffle(copy.size() - 1, i);

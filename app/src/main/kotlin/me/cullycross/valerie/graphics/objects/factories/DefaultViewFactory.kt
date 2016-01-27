@@ -14,7 +14,7 @@ import me.cullycross.valerie.utils.Point
 /**
  * It holds one copy of default object picture. Kind of lazy flyweight
  */
-class DefaultViewFactory(val aspectRatio: Float): ViewFactory {
+class DefaultViewFactory(val aspectRatio: Float) : ViewFactory {
 
     private val lineInstance: ViewObjectBuilder.GeneratedData by lazy {
         ViewObjectBuilder.createLine(to = Point(y = 0.1f), aspectRatio = aspectRatio)
@@ -24,11 +24,7 @@ class DefaultViewFactory(val aspectRatio: Float): ViewFactory {
         ViewObjectBuilder.createCircle(Point(), 0.02f, 32, aspectRatio)
     }
 
-    override fun getLine(): ViewObjectBuilder.GeneratedData {
-        return lineInstance
-    }
+    override fun getLine() = lineInstance
 
-    override fun getCircle(): ViewObjectBuilder.GeneratedData {
-        return circleInstance
-    }
+    override fun getCircle() = circleInstance
 }

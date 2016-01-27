@@ -5,13 +5,12 @@ import me.cullycross.valerie.graphics.objects.factories.DefaultViewFactory
 import me.cullycross.valerie.graphics.objects.factories.ViewFactory
 import me.cullycross.valerie.graphics.programs.SingleColorProgram
 import me.cullycross.valerie.graphics.utils.POSITION_COMPONENT_COUNT
-import me.cullycross.valerie.graphics.utils.positionObjectInScene
-import me.cullycross.valerie.objects.BaseObject
-import me.cullycross.valerie.objects.BaseRotatableObject
-import me.cullycross.valerie.objects.Drawable
-import me.cullycross.valerie.objects.directors.Director
-import me.cullycross.valerie.objects.directors.HorizontalLineDirector
-import me.cullycross.valerie.objects.directors.modifiers.SunModifier
+import me.cullycross.valerie.mechanics.objects.BaseObject
+import me.cullycross.valerie.mechanics.objects.BaseRotatableObject
+import me.cullycross.valerie.mechanics.objects.Drawable
+import me.cullycross.valerie.mechanics.directors.Director
+import me.cullycross.valerie.mechanics.directors.HorizontalLineDirector
+import me.cullycross.valerie.mechanics.directors.modifiers.SunModifier
 import me.cullycross.valerie.utils.Point
 import java.util.*
 import javax.microedition.khronos.egl.EGLConfig
@@ -30,6 +29,39 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
     private var program: SingleColorProgram? = null
     private var factory: ViewFactory? = null
 
+    private val rotatableDirector: Director<BaseRotatableObject> = HorizontalLineDirector(0.04f)
+    private val baseDirector: Director<BaseObject> = HorizontalLineDirector(0.075f)
+
+    val lineList: MutableList<BaseRotatableObject> = ArrayList()
+    val circleList: MutableList<BaseObject> = ArrayList()
+
+    init {
+
+        // lines
+        for (i in 0..20) {
+            lineList.add(BaseRotatableObject(image = object : Drawable {
+                override fun draw(obj: BaseObject) {
+                    program?.setUniforms(obj.matrix, g = 1f)
+                    factory?.getLine()?.vertexData?.setVertexAttribPointer(0, program?.positionLocation ?: 0,
+                            POSITION_COMPONENT_COUNT, 0);
+                    factory?.getLine()?.drawableList?.forEach { it.invoke() }
+                }
+            }))
+        }
+
+        // circles
+        for (i in 0..8) {
+            circleList.add(BaseObject(image = object : Drawable {
+                override fun draw(obj: BaseObject) {
+                    program?.setUniforms(obj.matrix, r = 1f)
+                    factory?.getCircle()?.vertexData?.setVertexAttribPointer(0, program?.positionLocation ?: 0,
+                            POSITION_COMPONENT_COUNT, 0);
+                    factory?.getCircle()?.drawableList?.forEach { it.invoke() }
+                }
+            }))
+        }
+    }
+
     override fun onSurfaceCreated(gl: GL10, config: EGLConfig) {
         super.onSurfaceCreated(gl, config)
         program = SingleColorProgram(context)
@@ -45,63 +77,10 @@ class ShuffleRenderer(context: Context) : Abstract2dRenderer(context) {
 
         program?.useProgram()
 
-        // ******************* Lines ********************
-
-        val rotatableDirector: Director<BaseRotatableObject> = HorizontalLineDirector(0.04f)
-
-        val lineList: MutableList<BaseRotatableObject> = ArrayList()
-
-        for (i in 0..20) {
-
-            val line = BaseRotatableObject()
-
-            line.image = object : Drawable {
-                override fun draw() {
-                    program?.setUniforms(
-                            positionObjectInScene(
-                                    line.position.x,
-                                    line.position.y,
-                                    line.angle), g = 1f)
-                    factory?.getLine()?.vertexData?.setVertexAttribPointer(0, program?.positionLocation ?: 0,
-                            POSITION_COMPONENT_COUNT, 0);
-                    factory?.getLine()?.drawableList?.forEach { it.draw() }
-                }
-            }
-
-            lineList.add(line)
-        }
-
         rotatableDirector.direct(Point(), lineList, SunModifier().modify())
-
         lineList.forEach { it.draw() }
 
-        // ******************* Circles ********************
-
-        val baseDirector: Director<BaseObject> = HorizontalLineDirector(0.075f)
-
-        val circleList: MutableList<BaseObject> = ArrayList()
-
-        for (i in 0..8) {
-
-            val circle = BaseObject()
-
-            circle.image = object : Drawable {
-                override fun draw() {
-                    program?.setUniforms(
-                            positionObjectInScene(
-                                    circle.position.x,
-                                    circle.position.y), r = 1f)
-                    factory?.getCircle()?.vertexData?.setVertexAttribPointer(0, program?.positionLocation ?: 0,
-                            POSITION_COMPONENT_COUNT, 0);
-                    factory?.getCircle()?.drawableList?.forEach { it.draw() }
-                }
-            }
-
-            circleList.add(circle)
-        }
-
         baseDirector.direct(Point(y = -0.25f), circleList)
-
         circleList.forEach { it.draw() }
     }
 }
