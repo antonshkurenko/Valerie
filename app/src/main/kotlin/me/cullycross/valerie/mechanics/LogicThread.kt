@@ -62,7 +62,7 @@ class LogicThread(val context: Context,
     }
 
     private fun countInterpolation(nextGameTick: Long) =
-            (System.currentTimeMillis() + SKIP_TICKS - nextGameTick) / SKIP_TICKS;
+            (System.currentTimeMillis() + SKIP_TICKS - nextGameTick) / SKIP_TICKS
 
     public interface EventsCallback {
         fun onStartGame()

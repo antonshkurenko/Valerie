@@ -29,7 +29,7 @@ abstract class BaseAction(protected val time: Long,
         }
 
         if (!isActive()) {
-            throw IllegalStateException("Action is not started!")
+            throw IllegalStateException("Action is not started! StartTime is ${startTime}, currentTime - startTime is ${currentTime - startTime}")
         }
 
         currentTime += delta
@@ -42,5 +42,4 @@ abstract class BaseAction(protected val time: Long,
     }
 
     override fun isActive() = startTime != -1L && currentTime - startTime < time
-
 }

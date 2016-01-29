@@ -16,7 +16,7 @@ import me.cullycross.valerie.utils.Vector
 open class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Director<T> {
 
     // todo(tonyshkurenko), 1/7/16:  is this nice way to use lambdas? How to remove Unit type declaration?
-    override fun direct(position: Point, list: List<T>, modify: (T) -> Unit) {
+    override fun direct(position: Point, list: List<T>, modify: ((T) -> Unit)?) {
         val count = list.size
 
         var startPoint: Point
@@ -29,7 +29,7 @@ open class HorizontalLineDirector<T : BaseObject>(val distance: Float) : Directo
         list.forEach {
             it.position = startPoint
             startPoint = startPoint.translateX(distance)
-            modify(it)
+            modify?.invoke(it)
         }
     }
 }

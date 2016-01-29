@@ -4,6 +4,7 @@ import me.cullycross.valerie.algorithms.Shuffling
 import me.cullycross.valerie.mechanics.actions.Action
 import me.cullycross.valerie.mechanics.actions.TranslateAction
 import me.cullycross.valerie.mechanics.objects.BaseObject
+import timber.log.Timber
 import java.util.*
 
 /**
@@ -31,23 +32,15 @@ class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
      */
     private val actions = ArrayList<Action>()
 
-    private var passedTime: Long = 0L;
+    private var passedTime: Long = 0L
+    private var timeSinceLastAction = 0L
 
     override fun onShuffle(newIndex: Int, pickedFromIndex: Int) {
 
         val action = TranslateAction(
                 objects[pickedFromIndex],
                 objects[newIndex].position.translateY(-0.5f),
-                5000L,
-                object : Action.Callback {
-                    override fun onActionStart() {
-                        throw UnsupportedOperationException()
-                    }
-
-                    override fun onActionEnd() {
-                        throw UnsupportedOperationException()
-                    }
-                })
+                5000L)
 
         actions.add(action)
 
@@ -57,14 +50,91 @@ class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
     }
 
     override fun onChooseIndex(index: Int) {
+        val choosenObject = objects[index]
+        val action = TranslateAction(
+                choosenObject,
+                choosenObject.position.translateY(0.1f),
+                250L,
+                object : Action.Callback {
+                    override fun onActionStart() {
+                        // ignored
+                    }
+
+                    override fun onActionEnd() {
+                        val actionBack = TranslateAction(
+                                choosenObject,
+                                choosenObject.position.translateY(-0.1f),
+                                250L)
+                        actions.add(actionBack)
+                        actionBack.start()
+                    }
+                })
+
         requests.add {
-            objects[index] // todo(tonyshkurenko), 1/27/16: do something, color or etc, shake?
+            actions.add(action)
+            action.start()
         }
     }
 
-    fun step(delta: Long):Boolean {
-        actions.forEach { it.step(delta) }
+
+    var tempCounter: Int = 0
+
+    fun step(delta: Long): Boolean {
+
+        if (passedTime == 0L || (actions.size == 0 && requests.size == 0)) {
+            tempCounter++
+            init()
+        }
+
+        passedTime += delta
+        timeSinceLastAction += delta
+
+        if (timeSinceLastAction >= ALGORITHM_STEP_DELAY / tempCounter) {
+
+            val request = requests.poll()
+            if (request != null) {
+                request.invoke()
+                timeSinceLastAction = 0L
+            }
+        }
+
+        Timber.d("Action::step, actions.size() = %d", actions.size)
+        actions.forEach {
+            it.step(delta)
+            if (!it.isActive()) {
+                actions.remove(it)
+            }
+        }
 
         return false // true if the end
+    }
+
+    private fun init() {
+
+        objects.forEach {
+            val action = TranslateAction(
+                    it,
+                    it.position.translateY(0.1f),
+                    250L,
+                    object : Action.Callback {
+                        override fun onActionStart() {
+                            // ignored
+                        }
+
+                        override fun onActionEnd() {
+                            val actionBack = TranslateAction(
+                                    it,
+                                    it.position.translateY(-0.1f),
+                                    250L)
+                            actions.add(actionBack)
+                            actionBack.start()
+                        }
+                    })
+
+            requests.add {
+                actions.add(action)
+                action.start()
+            }
+        }
     }
 }

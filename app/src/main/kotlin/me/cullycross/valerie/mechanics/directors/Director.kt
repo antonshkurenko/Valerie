@@ -14,5 +14,5 @@ import me.cullycross.valerie.utils.Point
 // todo(tonyshkurenko), 1/5/16:  direct line, arc, circle, triangle maybe? or even heart etc
 interface Director<T: BaseObject> {
     // todo(tonyshkurenko), 1/7/16:  is this good to declare empty lambda? how to use "null"?
-    fun direct(position: Point, list: List<T>, modify: (T) -> Unit = {/*do nothing by default*/})
+    fun direct(position: Point, list: List<T>, modify: ((T) -> Unit)? = {/*do nothing by default*/})
 }
