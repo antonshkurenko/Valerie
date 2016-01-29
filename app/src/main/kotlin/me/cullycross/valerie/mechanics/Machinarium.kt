@@ -13,9 +13,9 @@ import java.util.*
  * Code style: SquareAndroid (https://github.com/square/java-code-styles)
  * Follow me: @tonyshkurenko
  */
-class Machinarium<T : BaseObject>(val objects: List<T> = ArrayList()) : Shuffling.ShuffleCallback {
+class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
 
-    companion object {
+    private companion object {
         private const val ALGORITHM_STEP_DELAY: Long = 1000L
     }
 
@@ -62,7 +62,9 @@ class Machinarium<T : BaseObject>(val objects: List<T> = ArrayList()) : Shufflin
         }
     }
 
-    fun step(delta: Long) {
+    fun step(delta: Long):Boolean {
         actions.forEach { it.step(delta) }
+
+        return false // true if the end
     }
 }
