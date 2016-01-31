@@ -6,6 +6,7 @@ import me.cullycross.valerie.mechanics.actions.TranslateAction
 import me.cullycross.valerie.mechanics.objects.BaseObject
 import timber.log.Timber
 import java.util.*
+import java.util.concurrent.CopyOnWriteArrayList
 
 /**
  * Created by: Anton Shkurenko (cullycross)
@@ -28,9 +29,9 @@ class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
     private val requests: Queue<() -> Unit> = LinkedList()
 
     /**
-     * Keeps all scene actions
+     * Keeps all scene actions, used CoW arraylist, to iterate immutable copy
      */
-    private val actions = ArrayList<Action>()
+    private val actions = CopyOnWriteArrayList<Action>()
 
     private var passedTime: Long = 0L
     private var timeSinceLastAction = 0L
@@ -76,7 +77,6 @@ class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
         }
     }
 
-
     var tempCounter: Int = 0
 
     fun step(delta: Long): Boolean {
@@ -99,9 +99,10 @@ class Machinarium(val objects: List<BaseObject>) : Shuffling.ShuffleCallback {
         }
 
         Timber.d("Action::step, actions.size() = %d", actions.size)
+
         actions.forEach {
             it.step(delta)
-            if (!it.isActive()) {
+            if(!it.isActive()) {
                 actions.remove(it)
             }
         }
